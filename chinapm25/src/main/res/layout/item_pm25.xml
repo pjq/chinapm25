@@ -1,0 +1,87 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_list_white"
+    android:padding="10dip"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/itemTime"
+        style="@style/TextStyleHistoryItemTime"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="2014-11-30 20:00" />
+
+    <RelativeLayout
+        android:id="@+id/itemActivityLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/exchange_history_activity_text_height"
+        android:layout_below="@id/itemTime">
+
+        <TextView
+            android:id="@+id/itemActivityTitle"
+            style="@style/TextStyleHistoryItemGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:text="@string/city" />
+
+        <TextView
+            android:id="@+id/itemActivityName"
+            style="@style/TextStyleHistoryItemTime"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/common_left_margin"
+            android:layout_toRightOf="@id/itemActivityTitle"
+            android:gravity="bottom"
+            android:text="@string/city" />
+
+        <TextView
+            android:id="@+id/itemActivityOperator"
+            style="@style/TextStyleHistoryItemGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:text="@string/operator_seller" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/itemExchangeGiftLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/exchange_history_activity_text_height"
+        android:layout_below="@id/itemActivityLayout">
+
+        <TextView
+            android:id="@+id/itemExchangeGiftTitle"
+            style="@style/TextStyleHistoryItemGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:text="@string/city_chinese" />
+
+        <TextView
+            android:id="@+id/itemExchangeGiftName"
+            style="@style/TextStyleHistoryItemGiftBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/common_left_margin"
+            android:layout_toRightOf="@id/itemExchangeGiftTitle"
+            android:gravity="bottom"
+            android:text="@string/city_chinese" />
+
+        <TextView
+            android:id="@+id/itemExchangeGiftUser"
+            style="@style/TextStylePM25"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:layout_alignParentRight="true"
+            android:text="@string/operator_user" />
+    </RelativeLayout>
+
+</RelativeLayout>

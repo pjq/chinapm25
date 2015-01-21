@@ -1,0 +1,20 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="edittext_height">58dip</dimen>
+    <dimen name="edittext_margintop">10dip</dimen>
+    <dimen name="titlebar_height">60dip</dimen>
+
+    <dimen name="button_height">60dip</dimen>
+    <dimen name="button_margin_left">40dip</dimen>
+    <dimen name="login_edittext_height">58dip</dimen>
+    <dimen name="welcome_logo_width">120dip</dimen>
+    <dimen name="common_left_margin">15dip</dimen>
+    <dimen name="exchange_switch_button_height">35dip</dimen>
+    <dimen name="exchange_switch_button_wrapper_height">36dip</dimen>
+
+    <dimen name="about_upgrade_bottom_item_height">44dip</dimen>
+
+    <dimen name="exchange_history_activity_text_height">30dip</dimen>
+</resources>

@@ -1,0 +1,202 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <!--
+    Base application theme, dependent on API level. This theme is replaced
+    by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+-->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme" />
+
+    <style name="TitlebarTitleTextStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/titlebar_text_black</item>
+    </style>
+
+    <style name="TitlebarTitleRightTextStyle" parent="TitlebarTitleTextStyle">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextStyleWelcomeBestTool">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#a1a1a1</item>
+    </style>
+
+    <style name="TextStyleWelcomeAlreadyHaveAccount">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/common_text_grey_66</item>
+    </style>
+
+    <style name="TextStyleLoginFindPassword">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/common_text_blue</item>
+    </style>
+
+    <style name="TextStyleMainWelcomeUser">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/common_text_black</item>
+    </style>
+
+    <style name="TextStyleScanExchange">
+        <item name="android:textSize">21sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/titlebar_bkg_blue</item>
+    </style>
+
+    <style name="TextStyleRegisterSuccessTips1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/common_text_black</item>
+    </style>
+
+    <style name="TextStyleRegisterSuccessTips2">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/common_text_grey_66</item>
+    </style>
+
+    <style name="TextStyleRegisterStep">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/common_text_grey_99</item>
+    </style>
+
+    <style name="TextStyleEditText14sp">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextStyleEditText16sp">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+
+    <style name="TextStyleExchangePoint">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/common_text_black</item>
+    </style>
+
+
+    <style name="TextStyleExchangePointGrey"  parent="TextStyleExchangePoint">
+        <item name="android:textColor">@color/common_text_grey_99</item>
+    </style>
+
+    <style name="TextStyleSettingTitle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/common_text_black</item>
+    </style>
+
+    <style name="TextStyleSettingTitleGrey">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/common_text_grey_99</item>
+    </style>
+
+    <style name="TextStyleSettingVersionGrey">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/common_text_grey_99</item>
+    </style>
+
+    <style name="TextStyleAboutVersionGrey">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/common_text_grey_99</item>
+    </style>
+
+    <style name="TextStyleHistoryItemTime">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/common_text_black</item>
+    </style>
+
+    <style name="TextStyleHistoryItemGiftBlue">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/titlebar_bkg_blue</item>
+    </style>
+    <style name="TextStylePM25">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/titlebar_bkg_blue</item>
+    </style>
+
+    <style name="TextStyleHistoryItemGrey">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/common_text_grey_99</item>
+    </style>
+
+    <style name="BaseButton">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_height">44dip</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">fill_parent</item>
+    </style>
+
+    <style name="ButtonWhiteStyle" parent="BaseButton">
+        <item name="android:background">@drawable/selector_button_white</item>
+        <item name="android:layout_marginLeft">@dimen/button_margin_left</item>
+        <item name="android:layout_marginRight">@dimen/button_margin_left</item>
+        <item name="android:textColor">@color/button_blue_normal</item>
+    </style>
+
+    <style name="ButtonBlueStyle" parent="BaseButton">
+        <item name="android:background">@drawable/selector_button_blue</item>
+        <item name="android:layout_marginLeft">@dimen/button_margin_left</item>
+        <item name="android:layout_marginRight">@dimen/button_margin_left</item>
+        <item name="android:textColor">@color/button_white_normal</item>
+    </style>
+
+    <style name="ButtonRegisterStyle" parent="ButtonBlueStyle">
+    </style>
+
+    <style name="ButtonLoginStyle" parent="ButtonWhiteStyle">
+    </style>
+
+    <style name="ButtonExchangeSwitchBlueStyle" parent="BaseButton">
+        <item name="android:background">@color/common_text_blue</item>
+        <item name="android:layout_height">@dimen/exchange_switch_button_height</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="ButtonExchangeSwitchWhiteStyle" parent="ButtonExchangeSwitchBlueStyle">
+        <item name="android:background">@color/common_text_white</item>
+    </style>
+
+    <style name="ButtonExchangeSuccessBackHomeBlue" parent="ButtonBlueStyle">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ButtonExchangeSuccessBackHomeWhite" parent="ButtonWhiteStyle">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+
+</resources>

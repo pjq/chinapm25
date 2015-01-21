@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_bkg">#F0F0F0</color>
+    <color name="titlebar_bkg_white">#F8F8F8</color>
+    <color name="titlebar_bkg_blue">#3d71b8</color>
+    <color name="titlebar_text_white">#ffffff</color>
+    <color name="titlebar_text_black">#333333</color>
+    <color name="titlebar_bgk_bottom_grey_divider">#acacac</color>
+
+    <color name="whiteColor">#ffffff</color>
+    <drawable name="darkBlueColor">#222299</drawable>
+    <color name="blackColor">#000</color>
+
+    <color name="common_text_blue">#1b7fdd</color>
+    <color name="common_text_white">#ffffff</color>
+    <color name="common_text_black">@color/titlebar_text_black</color>
+    <color name="common_text_grey_99">#999999</color>
+    <color name="common_text_grey_66">#666666</color>
+    <color name="common_grey_divider">#d7d7d7</color>
+
+    <color name="button_blue_normal">@color/common_text_blue</color>
+    <color name="button_blue_disable">#9BC3E8</color>
+    <color name="button_white_normal">#ffffff</color>
+    <color name="button_white_click">#cccccc</color>
+    <color name="button_white_stroke">#cccccc</color>
+
+    <color name="bg_color_light_grey">#f6f6f6</color>
+    <drawable name="bg_color_light_grey">#f6f6f6</drawable>
+    <drawable name="white">#ffffff</drawable>
+    <color name="white">#ffffff</color>
+
+    <color name="login_bkg">#f0f0f0</color>
+    <color name="divider_color">#d7d7d7</color>
+    <color name="listview_divider_color">#e1e1e1</color>
+
+</resources>

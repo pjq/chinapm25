@@ -59,7 +59,7 @@ public class ExchangeHistoryListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.update(position, object);
+        viewHolder.update(position, getCount(), object);
 
 
         return view;
@@ -67,6 +67,7 @@ public class ExchangeHistoryListAdapter extends BaseAdapter {
 
     static class ViewHolder {
         TextView time;
+        TextView index;
         TextView activityName;
         TextView activityOperatorSeller;
         TextView exchangeGiftName;
@@ -74,18 +75,24 @@ public class ExchangeHistoryListAdapter extends BaseAdapter {
 
         ViewHolder(View view) {
             time = (TextView) view.findViewById(R.id.itemTime);
+            index = (TextView) view.findViewById(R.id.index);
             activityName = (TextView) view.findViewById(R.id.itemActivityName);
             activityOperatorSeller = (TextView) view.findViewById(R.id.itemActivityOperator);
             exchangeGiftName = (TextView) view.findViewById(R.id.itemExchangeGiftName);
             exchangeGiftUser = (TextView) view.findViewById(R.id.itemExchangeGiftUser);
         }
 
-        public void update(int position, PM25Object object) {
+        public void update(int position, int total, PM25Object object) {
             PM25Object itemObject = (PM25Object) object;
             time.setText(new Date().toLocaleString());
-            activityOperatorSeller.setText("" + position);
+            index.setText("" + (position + 1) + "/" + total);
             activityName.setText(itemObject.getCityPingyin());
             exchangeGiftName.setText(itemObject.getCityChinese());
+            if (itemObject.getPm25Int() >= 150) {
+                exchangeGiftUser.setTextColor(time.getResources().getColor(android.R.color.holo_red_light));
+            } else {
+                exchangeGiftUser.setTextColor(time.getResources().getColor(R.color.common_text_blue));
+            }
             exchangeGiftUser.setText(itemObject.getPm25());
 
         }

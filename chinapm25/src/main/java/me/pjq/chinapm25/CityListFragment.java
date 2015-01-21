@@ -9,6 +9,8 @@ import android.widget.ListView;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class CityListFragment extends BaseFragment implements View.OnClickListener {
@@ -117,6 +119,13 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
                 PM25Object object = new PM25Object(pingyin, chinese, pm25);
                 list.add(object);
             }
+
+            Collections.sort(list, new Comparator<PM25Object>() {
+                @Override
+                public int compare(PM25Object lhs, PM25Object rhs) {
+                    return rhs.getPm25Int() - lhs.getPm25Int();
+                }
+            });
 
 
             adapter.updateDataList(list);

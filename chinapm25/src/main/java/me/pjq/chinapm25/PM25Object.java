@@ -35,6 +35,10 @@ public class PM25Object {
         return pm25;
     }
 
+    public int getPm25Int() {
+        return Integer.valueOf(pm25);
+    }
+
     public void setPm25(String pm25) {
         this.pm25 = pm25;
     }

@@ -62,7 +62,7 @@ public class ExchangeHistoryListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.update(total, object);
+        viewHolder.update(total + 1, object);
 
 
         return view;

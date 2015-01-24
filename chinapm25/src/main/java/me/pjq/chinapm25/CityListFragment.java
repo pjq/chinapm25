@@ -108,7 +108,6 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
                 return;
             }
 
-            int i = 0;
             for (String item : all) {
                 String pingyin = "";
                 String chinese = "";
@@ -126,18 +125,20 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
                 }
 
                 PM25Object object = new PM25Object(pingyin, chinese, pm25);
-                object.setIndeOfAll(i);
                 list.add(object);
-
-                i++;
             }
 
             Collections.sort(list, new Comparator<PM25Object>() {
                 @Override
                 public int compare(PM25Object lhs, PM25Object rhs) {
-                    return rhs.getPm25Int() - lhs.getPm25Int();
+                    return -(rhs.getPm25Int() - lhs.getPm25Int());
                 }
             });
+
+            int total = list.size();
+            for (int i = 0; i < total; i++) {
+                list.get(i).setIndeOfAll(i);
+            }
 
             list = appendPredefineList(list);
             adapter.updateDataList(list, list.size() - preDefineCityList.size());

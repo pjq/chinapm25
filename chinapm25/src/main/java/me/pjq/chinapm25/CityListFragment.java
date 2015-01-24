@@ -18,6 +18,7 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
     private View view;
     private ListView listView;
     ExchangeHistoryListAdapter adapter;
+    ArrayList<String> preDefineCityList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,8 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
     }
 
     private void init() {
+        preDefineCityList = getPreDefineCity();
+
         listView = (ListView) view.findViewById(R.id.list_view);
         adapter = new ExchangeHistoryListAdapter(getApplicationContext());
         listView.setAdapter(adapter);
@@ -100,6 +103,12 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
             ArrayList<PM25Object> list = new ArrayList<PM25Object>();
             String[] all = s.split("\n");
 
+            if (null == all || all.length == 0) {
+                ToastUtil.showToast("List is empty");
+                return;
+            }
+
+            int i = 0;
             for (String item : all) {
                 String pingyin = "";
                 String chinese = "";
@@ -117,7 +126,10 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
                 }
 
                 PM25Object object = new PM25Object(pingyin, chinese, pm25);
+                object.setIndeOfAll(i);
                 list.add(object);
+
+                i++;
             }
 
             Collections.sort(list, new Comparator<PM25Object>() {
@@ -127,12 +139,55 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
                 }
             });
 
-
-            adapter.updateDataList(list);
+            list = appendPredefineList(list);
+            adapter.updateDataList(list, list.size() - preDefineCityList.size());
 
         } else {
             ToastUtil.showToast(getString(R.string.fail));
         }
+    }
+
+    private ArrayList<String> getPreDefineCity() {
+        ArrayList<String> preDefine = new ArrayList<String>();
+        preDefine.add("shanghai");
+        preDefine.add("shenzhen");
+        preDefine.add("beijing");
+        preDefine.add("nanchang");
+        preDefine.add("suzhou");
+        preDefine.add("yangzhou");
+        preDefine.add("hangzhou");
+
+        return preDefine;
+    }
+
+    private ArrayList appendPredefineList(ArrayList<PM25Object> list) {
+        if (null == list) {
+            return null;
+        }
+
+
+        ArrayList<PM25Object> preDefineCity = new ArrayList<PM25Object>();
+
+        for (String city : preDefineCityList) {
+            PM25Object object = getByCityName(list, city);
+            if (null != object) {
+                preDefineCity.add(object);
+            }
+        }
+
+        list.addAll(0, preDefineCity);
+
+        return list;
+    }
+
+    private PM25Object getByCityName(ArrayList<PM25Object> list, String key) {
+        for (PM25Object object : list) {
+            if (object.getCityChinese().equalsIgnoreCase(key) || object.getCityPingyin().equalsIgnoreCase(key)) {
+                return object;
+            }
+        }
+
+        return null;
     }
 
     public String gbk2utf8(String gbk) {

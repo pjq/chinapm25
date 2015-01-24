@@ -18,14 +18,17 @@ public class ExchangeHistoryListAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
 
+    private int total;
+
     public ExchangeHistoryListAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
 
     }
 
-    public void updateDataList(ArrayList<PM25Object> dataList) {
+    public void updateDataList(ArrayList<PM25Object> dataList, int total) {
         this.dataList = dataList;
+        this.total = total;
 
         notifyDataSetChanged();
     }
@@ -59,7 +62,7 @@ public class ExchangeHistoryListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.update(position, getCount(), object);
+        viewHolder.update(total, object);
 
 
         return view;
@@ -82,10 +85,10 @@ public class ExchangeHistoryListAdapter extends BaseAdapter {
             exchangeGiftUser = (TextView) view.findViewById(R.id.itemExchangeGiftUser);
         }
 
-        public void update(int position, int total, PM25Object object) {
+        public void update(int total, PM25Object object) {
             PM25Object itemObject = (PM25Object) object;
             time.setText(new Date().toLocaleString());
-            index.setText("" + (position + 1) + "/" + total);
+            index.setText("" + (object.getIndeOfAll() + 1) + "/" + total);
             activityName.setText(itemObject.getCityPingyin());
             exchangeGiftName.setText(itemObject.getCityChinese());
             if (itemObject.getPm25Int() >= 150) {

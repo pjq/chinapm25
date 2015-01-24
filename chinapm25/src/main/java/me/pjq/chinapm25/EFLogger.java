@@ -11,6 +11,6 @@ public class EFLogger {
     }
 
     public static void w(String tag, String onLowMemory) {
-       EFLogger.w(tag, onLowMemory);
+       EFLogger.i(tag, onLowMemory);
     }
 }

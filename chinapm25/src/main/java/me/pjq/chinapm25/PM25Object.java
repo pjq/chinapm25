@@ -9,6 +9,16 @@ public class PM25Object {
     String cityChinese;
     String pm25;
 
+    public int getIndeOfAll() {
+        return indeOfAll;
+    }
+
+    public void setIndeOfAll(int indeOfAll) {
+        this.indeOfAll = indeOfAll;
+    }
+
+    int indeOfAll;
+
     public PM25Object(String cityPingyin, String cityChinese, String pm25) {
         this.cityPingyin = cityPingyin;
         this.cityChinese = cityChinese;

@@ -153,7 +153,9 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
         preDefine.add("shanghai");
         preDefine.add("shenzhen");
         preDefine.add("beijing");
+        preDefine.add("guangzhou");
         preDefine.add("nanchang");
+        preDefine.add("xinyu");
         preDefine.add("suzhou");
         preDefine.add("yangzhou");
         preDefine.add("hangzhou");

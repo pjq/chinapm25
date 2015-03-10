@@ -6,8 +6,8 @@
     android:background="@drawable/selector_list_white"
     android:paddingLeft="10dip"
     android:paddingRight="10dip"
-    android:paddingTop="5dip"
-    android:paddingBottom="5dip"
+    android:paddingTop="3dip"
+    android:paddingBottom="3dip"
     tools:context=".MainActivity">
 
     <TextView

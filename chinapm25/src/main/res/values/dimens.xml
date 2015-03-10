@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="edittext_height">58dip</dimen>
     <dimen name="edittext_margintop">10dip</dimen>
-    <dimen name="titlebar_height">50dip</dimen>
+    <dimen name="titlebar_height">45dip</dimen>
 
     <dimen name="button_height">60dip</dimen>
     <dimen name="button_margin_left">40dip</dimen>

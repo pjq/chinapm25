@@ -12,5 +12,6 @@
     <string name="please_wait">Please waiting...</string>
     <string name="fail">Get data failure</string>
     <string name="get_data">Refresh</string>
+    <string name="app_title">ChinaPM25 (http://pjq.me)</string>
 
 </resources>

@@ -1,11 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/selector_list_white"
-    android:padding="10dip"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip"
+    android:paddingTop="3dip"
+    android:paddingBottom="3dip"
     tools:context=".MainActivity">
 
     <TextView
@@ -19,10 +21,10 @@
         android:id="@+id/index"
         style="@style/TextStyleHistoryItemGrey"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:visibility="visible"
-        android:text="@string/operator_seller" />
+        android:text="@string/operator_seller"
+        android:visibility="visible" />
 
     <RelativeLayout
         android:id="@+id/itemActivityLayout"
@@ -53,10 +55,10 @@
             style="@style/TextStyleHistoryItemGrey"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="bottom"
             android:layout_alignParentRight="true"
-            android:visibility="gone"
-            android:text="@string/operator_seller" />
+            android:gravity="bottom"
+            android:text="@string/operator_seller"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -83,14 +85,14 @@
             android:gravity="bottom"
             android:text="@string/city_chinese" />
 
-        <TextView
-            android:id="@+id/itemExchangeGiftUser"
-            style="@style/TextStylePM25"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="bottom"
-            android:layout_alignParentRight="true"
-            android:text="@string/operator_user" />
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/itemExchangeGiftUser"
+        style="@style/TextStylePM25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/index"
+        android:text="@string/operator_user" />
 </RelativeLayout>

@@ -81,10 +81,14 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
         VolleyManger.getInstance().getPM25(new VolleyManger.OnResponse<String>() {
             @Override
             public void onResponse(Object error, String s) {
-                if (null == error) {
-                    onFinishGetData(true, gbk2utf8(s));
-                } else {
-                    onFinishGetData(false, s);
+                try {
+                    if (null == error) {
+                        onFinishGetData(true, gbk2utf8(s));
+                    } else {
+                        onFinishGetData(false, s);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -153,6 +157,7 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
         preDefine.add("shanghai");
         preDefine.add("shenzhen");
         preDefine.add("beijing");
+        preDefine.add("guangzhou");
         preDefine.add("nanchang");
         preDefine.add("xinyu");
         preDefine.add("suzhou");

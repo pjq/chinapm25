@@ -9,6 +9,7 @@
     <RelativeLayout
         android:id="@+id/titleBar"
         android:layout_width="match_parent"
+        android:paddingLeft="45dip"
         android:layout_height="@dimen/titlebar_height"
         android:background="@color/titlebar_bkg_blue">
 
@@ -29,8 +30,9 @@
             android:layout_toRightOf="@id/icon"
             android:paddingLeft="5dip"
             android:text="@string/app_title"
+            android:singleLine="true"
             android:textColor="#e8ffffff"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </RelativeLayout>
 

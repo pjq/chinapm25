@@ -1,1 +1,1 @@
-include ':app', ':chinapm25'
+include ':chinapm25'

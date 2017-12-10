@@ -47,7 +47,8 @@ public class VolleyManger {
     }
 
     public void getPM25(final OnResponse<String> onResponse){
-        String url = "http://ef.pjq.me/download/pm25/all_city/pm25_all.txt";
+//        String url = "https://ef.pjq.me/download/pm25/all_city/pm25_all.txt";
+        String  url ="http://yardvps.pjq.me/download/pm25/all_city/pm25_all.txt";
         getString(url, onResponse);
     }
 

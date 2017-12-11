@@ -46,7 +46,13 @@ public class PM25Object {
     }
 
     public int getPm25Int() {
-        return Integer.valueOf(pm25);
+        try{
+            return Integer.valueOf(pm25);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
     public void setPm25(String pm25) {

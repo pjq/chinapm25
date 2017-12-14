@@ -10,7 +10,6 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
@@ -30,7 +29,7 @@ public class VolleyManger {
         requestQueue = Volley.newRequestQueue(context);
     }
 
-    public void setDebug(boolean isDebug){
+    public void setDebug(boolean isDebug) {
         VolleyLog.DEBUG = isDebug;
     }
 
@@ -46,9 +45,18 @@ public class VolleyManger {
         return volleyManger;
     }
 
-    public void getPM25(final OnResponse<String> onResponse){
+    public void getPM25(final OnResponse<String> onResponse) {
 //        String url = "https://ef.pjq.me/download/pm25/all_city/pm25_all.txt";
-        String  url ="http://yardvps.pjq.me/download/pm25/all_city/pm25_all.txt";
+        String url = "http://yardvps.pjq.me/download/pm25/all_city/pm25_all.txt";
+        getString(url, onResponse);
+    }
+
+    /**
+     * get values from http://www.soupm25.com/map
+     */
+    public void getPM25From(final OnResponse<String> onResponse) {
+//        String url = "https://ef.pjq.me/download/pm25/all_city/pm25_all.txt";
+        String url = "https://www.soupm25.com/map";
         getString(url, onResponse);
     }
 
@@ -87,7 +95,7 @@ public class VolleyManger {
      */
     public void getString(final String url, final OnResponse<String> onResponse) {
         EFLogger.i(TAG, "get url = " + url);
-        StringReq request = new StringReq(Request.Method.GET, url,  new Response.Listener<String>() {
+        StringReq request = new StringReq(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 EFLogger.i(TAG, url + ", response = " + response.toString());
@@ -107,7 +115,7 @@ public class VolleyManger {
         requestQueue.add(request);
     }
 
-    public void post(final String url, JSONObject body, final OnResponse onResponse){
+    public void post(final String url, JSONObject body, final OnResponse onResponse) {
         EFLogger.i(TAG, "get url = " + url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, body, new Response.Listener<JSONObject>() {
             @Override

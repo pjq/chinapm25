@@ -7,10 +7,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class CityListFragment extends BaseFragment implements View.OnClickListener {
@@ -75,23 +81,148 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
         progressDialog.show();
     }
 
+    private void hideProgressDialog(){
+        if (null != progressDialog) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
+    }
+
     private void onStartGetData() {
         showProgressDialog(getString(R.string.get_data));
 
-        VolleyManger.getInstance().getPM25(new VolleyManger.OnResponse<String>() {
+//        VolleyManger.getInstance().getPM25(new VolleyManger.OnResponse<String>() {
+//            @Override
+//            public void onResponse(Object error, String s) {
+//                try {
+//                    if (null == error) {
+//                        onFinishGetData(true, gbk2utf8(s));
+//                    } else {
+//                        onFinishGetData(false, s);
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+
+        VolleyManger.getInstance().getPM25From(new VolleyManger.OnResponse<String>() {
             @Override
             public void onResponse(Object error, String s) {
+                if (getActivity().isFinishing()||isDetached()) {
+                    return;
+                }
+
+                hideProgressDialog();
+
                 try {
+//                    if (null == error) {
+//                        onFinishGetData(true, gbk2utf8(s));
+//                    } else {
+//                        onFinishGetData(false, s);
+//                    }
+
                     if (null == error) {
-                        onFinishGetData(true, gbk2utf8(s));
-                    } else {
-                        onFinishGetData(false, s);
+                        List<PM25Object> list = parserValues(s);
+                        updateList((ArrayList<PM25Object>) list);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    private void updateList(ArrayList<PM25Object> list) {
+        Collections.sort(list, new Comparator<PM25Object>() {
+            @Override
+            public int compare(PM25Object lhs, PM25Object rhs) {
+                return -(rhs.getPm25Int() - lhs.getPm25Int());
+            }
+        });
+
+        int total = list.size();
+        for (int i = 0; i < total; i++) {
+            list.get(i).setIndeOfAll(i);
+        }
+
+        list = appendPredefineList(list);
+        adapter.updateDataList(list, list.size() - preDefineCityList.size());
+    }
+
+    Pattern cityPointsPattern = Pattern.compile("var cityPoints = (.*,\\});", Pattern.DOTALL);
+    Pattern cityNamesPattern = Pattern.compile("var cityNames = (.*)\\}\\};", Pattern.DOTALL);
+    Pattern myCompOverlayPattern = Pattern.compile("var myCompOverlay = .*\\);");
+
+    List<PM25Object> parserValues(String html) {
+        if (null == html) {
+            return null;
+        }
+
+        //grep -E -i "var cityPoints|var cityNames|var myCompOverlay"
+        Matcher matcher = cityPointsPattern.matcher(html);
+        String cityPoints = null;
+        while (matcher.find()) {
+            String group = matcher.group(1);
+            cityPoints = group;
+            cityPoints = cityPoints.replace(",}", "}");
+            int start = matcher.start();
+            int end = matcher.end();
+        }
+
+        matcher = cityNamesPattern.matcher(html);
+        String cityNames = null;
+        while (matcher.find()) {
+            String group = matcher.group(1);
+            cityNames = group;
+            int start = matcher.start();
+            int end = matcher.end();
+        }
+
+        JSONObject cityPointsJsonObject = null;
+        JSONObject cityNamesJsonObject = null;
+        try {
+            cityPointsJsonObject = new JSONObject(cityPoints);
+            cityNamesJsonObject = new JSONObject(cityNames);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        matcher = myCompOverlayPattern.matcher(html);
+
+        List<PM25Object> list = new ArrayList<>();
+        while (matcher.find()) {
+            //var myCompOverlay = new ComplexCustomOverlay(cityPoints["秦皇岛"], "秦皇岛", "秦皇岛", "秦皇岛 105 - 较不健康", "#eb8a14", "");
+            String group = matcher.group();
+            String cityValue = group.split(",")[3].replace("\"", "").trim();
+            String color = group.split(",")[4].replace("\"", "").trim();
+
+            PM25Object pm25Object = new PM25Object();
+            pm25Object.setCityChinese(cityValue.split(" ")[0].trim());
+            pm25Object.setPm25(cityValue.split(" ")[1].trim());
+            pm25Object.setLevelDescription(cityValue.split(" ")[3].trim());
+            pm25Object.setColor(color);
+
+            //{"cityid":"1","pinyin":"beijing"}
+            String cityNameJson = cityNamesJsonObject.optString(pm25Object.getCityChinese());
+            //{"lng":116.395645,"lat":39.929986}
+            String cityPointJson = cityPointsJsonObject.optString(pm25Object.getCityChinese());
+            try {
+                String cityNamePinyin = new JSONObject(cityNameJson).optString("pinyin");
+                String lat = new JSONObject(cityPointJson).optString("lat");
+                String lng = new JSONObject(cityPointJson).optString("lng");
+
+                pm25Object.setLat(lat);
+                pm25Object.setLng(lng);
+                pm25Object.setCityPingyin(cityNamePinyin);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            list.add(pm25Object);
+        }
+
+        return list;
     }
 
     private void onFinishGetData(boolean isSuccess, String s) {

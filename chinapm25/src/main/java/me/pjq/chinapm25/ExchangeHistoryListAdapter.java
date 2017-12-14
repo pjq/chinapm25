@@ -1,6 +1,7 @@
 package me.pjq.chinapm25;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,13 +92,16 @@ public class ExchangeHistoryListAdapter extends BaseAdapter {
             index.setText("" + (object.getIndeOfAll() + 1) + "/" + total);
             activityName.setText(itemObject.getCityPingyin());
             exchangeGiftName.setText(itemObject.getCityChinese());
-            if (itemObject.getPm25Int() >= 150) {
-                exchangeGiftUser.setTextColor(time.getResources().getColor(android.R.color.holo_red_light));
-            } else {
-                exchangeGiftUser.setTextColor(time.getResources().getColor(R.color.common_text_blue));
-            }
-            exchangeGiftUser.setText(itemObject.getPm25());
+//            if (itemObject.getPm25Int() >= 150) {
+//                exchangeGiftUser.setTextColor(time.getResources().getColor(android.R.color.holo_red_light));
+//            } else {
+//                exchangeGiftUser.setTextColor(time.getResources().getColor(R.color.common_text_blue));
+//            }
 
+//            exchangeGiftUser.setTextColor(object.getColorInt());
+//            exchangeGiftUser.setTextColor(Color.parseColor(object.getColor()));
+            exchangeGiftUser.setBackgroundColor(Color.parseColor(object.getColor()));
+            exchangeGiftUser.setText(itemObject.getPm25() + " " + itemObject.getLevelDescription());
         }
     }
 }

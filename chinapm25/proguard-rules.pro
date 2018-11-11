@@ -33,7 +33,6 @@
 -keep class com.google.common.** {*;}
 -keep class com.loopj.android.http.** {*;}
 -keep class sun.misc.Unsafe{*;}
--keep class com.jikabao.android.common.model.** {*;}
 -keep public class * { public protected *; }
 -keep public class * extends android.app.Activity
 -keep public class * extends android.content.BroadcastReceiver
@@ -72,3 +71,8 @@
 # joda-time
 -keep class org.joda.time.** {*;}
 -dontwarn org.joda.time.**
+
+
+-keep class com.baidu.** {*;}
+-keep class vi.com.** {*;}
+-dontwarn com.baidu.**

@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/selector_list_white"
+    android:paddingBottom="3dip"
     android:paddingLeft="10dip"
     android:paddingRight="10dip"
     android:paddingTop="3dip"
-    android:paddingBottom="3dip"
     tools:context=".MainActivity">
 
     <TextView
@@ -27,13 +27,13 @@
         android:visibility="visible" />
 
     <RelativeLayout
-        android:id="@+id/itemActivityLayout"
+        android:id="@+id/pingyinLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/exchange_history_activity_text_height"
         android:layout_below="@id/itemTime">
 
         <TextView
-            android:id="@+id/itemActivityTitle"
+            android:id="@+id/pingyinTitle"
             style="@style/TextStyleHistoryItemGrey"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -41,34 +41,25 @@
             android:text="@string/city" />
 
         <TextView
-            android:id="@+id/itemActivityName"
+            android:id="@+id/pingyinCityName"
             style="@style/TextStyleHistoryItemTime"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/common_left_margin"
-            android:layout_toRightOf="@id/itemActivityTitle"
+            android:layout_toRightOf="@id/pingyinTitle"
             android:gravity="bottom"
             android:text="@string/city" />
 
-        <TextView
-            android:id="@+id/itemActivityOperator"
-            style="@style/TextStyleHistoryItemGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:gravity="bottom"
-            android:text="@string/operator_seller"
-            android:visibility="gone" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/itemExchangeGiftLayout"
+        android:id="@+id/cityLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/exchange_history_activity_text_height"
-        android:layout_below="@id/itemActivityLayout">
+        android:layout_below="@id/pingyinLayout">
 
         <TextView
-            android:id="@+id/itemExchangeGiftTitle"
+            android:id="@+id/cityTitle"
             style="@style/TextStyleHistoryItemGrey"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -76,12 +67,12 @@
             android:text="@string/city_chinese" />
 
         <TextView
-            android:id="@+id/itemExchangeGiftName"
+            android:id="@+id/cityName"
             style="@style/TextStyleHistoryItemGiftBlue"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/common_left_margin"
-            android:layout_toRightOf="@id/itemExchangeGiftTitle"
+            android:layout_toRightOf="@id/cityTitle"
             android:gravity="bottom"
             android:text="@string/city_chinese" />
 
@@ -93,7 +84,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:padding="5dip"
         android:layout_below="@id/index"
+        android:layout_marginTop="5dip"
+        android:padding="5dip"
         android:text="@string/operator_user" />
 </RelativeLayout>

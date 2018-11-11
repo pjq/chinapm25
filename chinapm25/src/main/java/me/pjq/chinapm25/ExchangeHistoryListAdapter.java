@@ -80,9 +80,8 @@ public class ExchangeHistoryListAdapter extends BaseAdapter {
         ViewHolder(View view) {
             time = (TextView) view.findViewById(R.id.itemTime);
             index = (TextView) view.findViewById(R.id.index);
-            activityName = (TextView) view.findViewById(R.id.itemActivityName);
-            activityOperatorSeller = (TextView) view.findViewById(R.id.itemActivityOperator);
-            exchangeGiftName = (TextView) view.findViewById(R.id.itemExchangeGiftName);
+            activityName = (TextView) view.findViewById(R.id.pingyinCityName);
+            exchangeGiftName = (TextView) view.findViewById(R.id.cityName);
             exchangeGiftUser = (TextView) view.findViewById(R.id.itemExchangeGiftUser);
         }
 
@@ -92,14 +91,6 @@ public class ExchangeHistoryListAdapter extends BaseAdapter {
             index.setText("" + (object.getIndeOfAll() + 1) + "/" + total);
             activityName.setText(itemObject.getCityPingyin());
             exchangeGiftName.setText(itemObject.getCityChinese());
-//            if (itemObject.getPm25Int() >= 150) {
-//                exchangeGiftUser.setTextColor(time.getResources().getColor(android.R.color.holo_red_light));
-//            } else {
-//                exchangeGiftUser.setTextColor(time.getResources().getColor(R.color.common_text_blue));
-//            }
-
-//            exchangeGiftUser.setTextColor(object.getColorInt());
-//            exchangeGiftUser.setTextColor(Color.parseColor(object.getColor()));
             exchangeGiftUser.setBackgroundColor(Color.parseColor(object.getColor()));
             exchangeGiftUser.setText(itemObject.getPm25() + " " + itemObject.getLevelDescription());
         }

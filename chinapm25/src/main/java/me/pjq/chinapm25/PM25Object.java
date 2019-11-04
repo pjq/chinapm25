@@ -26,7 +26,7 @@ public class PM25Object {
     }
 
     public int getColorInt() {
-        return  Utils.HexToInt(color.replace("#", "0x"));
+        return Utils.HexToInt(color.replace("#", "0x"));
     }
 
     public void setColor(String color) {

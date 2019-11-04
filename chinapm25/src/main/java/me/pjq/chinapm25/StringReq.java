@@ -22,13 +22,13 @@ public class StringReq extends Request<String> {
     /**
      * Creates a new request with the given method.
      *
-     * @param method the request {@link Method} to use
-     * @param url URL to fetch the string at
-     * @param listener Listener to receive the String response
+     * @param method        the request {@link Method} to use
+     * @param url           URL to fetch the string at
+     * @param listener      Listener to receive the String response
      * @param errorListener Error listener, or null to ignore errors
      */
     public StringReq(int method, String url, Response.Listener<String> listener,
-                         Response.ErrorListener errorListener) {
+                     Response.ErrorListener errorListener) {
         super(method, url, errorListener);
         mListener = listener;
     }
@@ -36,8 +36,8 @@ public class StringReq extends Request<String> {
     /**
      * Creates a new GET request.
      *
-     * @param url URL to fetch the string at
-     * @param listener Listener to receive the String response
+     * @param url           URL to fetch the string at
+     * @param listener      Listener to receive the String response
      * @param errorListener Error listener, or null to ignore errors
      */
     public StringReq(String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {
@@ -47,8 +47,8 @@ public class StringReq extends Request<String> {
     /**
      * Creates a new GET request with the given Charset.
      *
-     * @param url URL to fetch the string at
-     * @param listener Listener to receive the String response
+     * @param url           URL to fetch the string at
+     * @param listener      Listener to receive the String response
      * @param errorListener Error listener, or null to ignore errors
      */
     public StringReq(String url, String charset, Response.Listener<String> listener, Response.ErrorListener errorListener) {
@@ -65,7 +65,7 @@ public class StringReq extends Request<String> {
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
         String parsed;
         try {
-            if(charset != null) {
+            if (charset != null) {
                 parsed = new String(response.data, charset);
             } else {
                 parsed = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
@@ -85,6 +85,7 @@ public class StringReq extends Request<String> {
 
     /**
      * set the Parse Charset Encoding
+     *
      * @param charset
      */
     public void setCharset(String charset) {

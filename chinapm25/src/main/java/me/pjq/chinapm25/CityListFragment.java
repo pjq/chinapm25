@@ -3,9 +3,14 @@ package me.pjq.chinapm25;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+
+import androidx.appcompat.widget.SearchView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +23,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import me.pjq.chinapm25.helper.UserPreference;
+
 
 public class CityListFragment extends BaseFragment implements View.OnClickListener {
     private Button continueExchangeButton;
@@ -29,6 +36,7 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -41,6 +49,34 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
     @Override
     protected void ensureUi() {
         init();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_main, menu);
+        MenuItem searchItem = menu.findItem(R.id.search_item);
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQuery(UserPreference.getStoredQuery(getContext()), false);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                UserPreference.setStoredQuery(getContext(), s);
+                searchView.clearFocus();
+                onStartGetData();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if ((s == null || s.isEmpty()) && UserPreference.getStoredQuery(getContext()) != null && !UserPreference.getStoredQuery(getContext()).isEmpty()) {
+                    UserPreference.setStoredQuery(getContext(), null);
+                    searchView.clearFocus();
+                    onStartGetData();
+                }
+                return true;
+            }
+        });
     }
 
     @Override
@@ -57,11 +93,9 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
     private void init() {
         preDefineCityList = getPreDefineCity();
 
-        listView = (ListView) view.findViewById(R.id.list_view);
+        listView = view.findViewById(R.id.list_view);
         adapter = new ExchangeHistoryListAdapter(getApplicationContext());
         listView.setAdapter(adapter);
-
-//        onStartGetData();
     }
 
     @Override
@@ -81,7 +115,7 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
         progressDialog.show();
     }
 
-    private void hideProgressDialog(){
+    private void hideProgressDialog() {
         if (null != progressDialog) {
             progressDialog.dismiss();
             progressDialog = null;
@@ -91,36 +125,16 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
     private void onStartGetData() {
         showProgressDialog(getString(R.string.get_data));
 
-//        VolleyManger.getInstance().getPM25(new VolleyManger.OnResponse<String>() {
-//            @Override
-//            public void onResponse(Object error, String s) {
-//                try {
-//                    if (null == error) {
-//                        onFinishGetData(true, gbk2utf8(s));
-//                    } else {
-//                        onFinishGetData(false, s);
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-
         VolleyManger.getInstance().getPM25From(new VolleyManger.OnResponse<String>() {
             @Override
             public void onResponse(Object error, String s) {
-                if (getActivity().isFinishing()||isDetached()) {
+                if (getActivity().isFinishing() || isDetached()) {
                     return;
                 }
 
                 hideProgressDialog();
 
                 try {
-//                    if (null == error) {
-//                        onFinishGetData(true, gbk2utf8(s));
-//                    } else {
-//                        onFinishGetData(false, s);
-//                    }
 
                     if (null == error) {
                         List<PM25Object> list = parserValues(s);
@@ -147,7 +161,9 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
         }
 
         list = appendPredefineList(list);
-        adapter.updateDataList(list, list.size() - preDefineCityList.size());
+        list = filterSearchList(list);
+
+        adapter.updateDataList(list, list.size());
     }
 
     Pattern cityPointsPattern = Pattern.compile("var cityPoints = (.*,\\});", Pattern.DOTALL);
@@ -303,19 +319,42 @@ public class CityListFragment extends BaseFragment implements View.OnClickListen
             return null;
         }
 
-
-        ArrayList<PM25Object> preDefineCity = new ArrayList<PM25Object>();
-
+        ArrayList<PM25Object> preDefineCityInfoList = new ArrayList<>();
+        PM25Object cityInfo = null;
         for (String city : preDefineCityList) {
-            PM25Object object = getByCityName(list, city);
-            if (null != object) {
-                preDefineCity.add(object);
+            cityInfo = getByCityName(list, city);
+            if (null != cityInfo) {
+                list.remove(cityInfo);
+                preDefineCityInfoList.add(cityInfo);
             }
         }
 
-        list.addAll(0, preDefineCity);
+
+        list.addAll(0, preDefineCityInfoList);
 
         return list;
+    }
+
+    private ArrayList<PM25Object> filterSearchList(ArrayList<PM25Object> list){
+        if (list == null) {
+            return null;
+        }
+
+        String queryCity = UserPreference.getStoredQuery(getActivity());
+
+        ArrayList<PM25Object> filteredList = new ArrayList<PM25Object>();
+
+        if (queryCity == null || queryCity.isEmpty()) {
+            return list;
+        }
+
+        for (PM25Object cityInfo : list) {
+            if (cityInfo.cityChinese.equals(queryCity) || cityInfo.cityPingyin.equalsIgnoreCase(queryCity)) {
+                filteredList.add(cityInfo);
+            }
+        }
+
+        return filteredList;
     }
 
     private PM25Object getByCityName(ArrayList<PM25Object> list, String key) {

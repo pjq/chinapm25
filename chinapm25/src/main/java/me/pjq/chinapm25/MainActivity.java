@@ -1,12 +1,16 @@
 package me.pjq.chinapm25;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements ExchangeHistoryListAdapter.Callbacks {
     Fragment fragment;
 
     @Override
@@ -23,5 +27,11 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.container, fragment)
                     .commit();
         }
+    }
+
+    @Override
+    public void onListItemClicked(PM25Object pm25Object) {
+        Intent intent = MapActivity.newItent(this, pm25Object);
+        startActivity(intent);
     }
 }

@@ -1,7 +1,9 @@
 package me.pjq.chinapm25;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +22,16 @@ public class ExchangeHistoryListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
 
     private int total;
+    private Callbacks mListItemClickCallbacks;
+
+    public interface Callbacks {
+        void onListItemClicked(PM25Object pm25Object);
+    }
 
     public ExchangeHistoryListAdapter(Context context) {
         this.context = context;
+        // TODO: check if it is properly
+        mListItemClickCallbacks = (Callbacks)context;
         inflater = LayoutInflater.from(context);
 
     }
@@ -51,7 +60,7 @@ public class ExchangeHistoryListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        PM25Object object = (PM25Object) getItem(position);
+        final PM25Object object = (PM25Object) getItem(position);
 
         ViewHolder viewHolder;
         View view = convertView;
@@ -69,15 +78,19 @@ public class ExchangeHistoryListAdapter extends BaseAdapter {
         return view;
     }
 
-    static class ViewHolder {
+    // TODO: todo why onclick dosen't work, static
+    class ViewHolder implements View.OnClickListener {
         TextView time;
         TextView index;
         TextView activityName;
-        TextView activityOperatorSeller;
         TextView exchangeGiftName;
         TextView exchangeGiftUser;
+        PM25Object itemObject = null;
+        View itemView = null;
 
         ViewHolder(View view) {
+            itemView = view;
+            view.setOnClickListener(this);
             time = (TextView) view.findViewById(R.id.itemTime);
             index = (TextView) view.findViewById(R.id.index);
             activityName = (TextView) view.findViewById(R.id.pingyinCityName);
@@ -86,13 +99,18 @@ public class ExchangeHistoryListAdapter extends BaseAdapter {
         }
 
         public void update(int total, PM25Object object) {
-            PM25Object itemObject = (PM25Object) object;
+            itemObject = object;
             time.setText(new Date().toLocaleString());
             index.setText("" + (object.getIndeOfAll() + 1) + "/" + total);
             activityName.setText(itemObject.getCityPingyin());
             exchangeGiftName.setText(itemObject.getCityChinese());
             exchangeGiftUser.setBackgroundColor(Color.parseColor(object.getColor()));
             exchangeGiftUser.setText(itemObject.getPm25() + " " + itemObject.getLevelDescription());
+        }
+
+        @Override
+        public void onClick(View v) {
+            mListItemClickCallbacks.onListItemClicked(itemObject);
         }
     }
 }

@@ -3,6 +3,9 @@ package me.pjq.chinapm25;
 import android.app.Application;
 import android.content.Context;
 
+import com.baidu.mapapi.CoordType;
+import com.baidu.mapapi.SDKInitializer;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
@@ -41,6 +44,8 @@ public class BaseApplication extends Application {
             }
         });
 
+        SDKInitializer.initialize(this);
+        SDKInitializer.setCoordType(CoordType.BD09LL);
     }
 
     @Override

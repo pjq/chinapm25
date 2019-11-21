@@ -33,7 +33,7 @@ public class ToastUtil {
         } else {
             sToastInstance = createToast(context, text, duration);
         }
-        
+
         sToastInstance.show();
     }
 
@@ -46,7 +46,7 @@ public class ToastUtil {
         } else {
             sToastInstance = createToast(context, text, Toast.LENGTH_SHORT);
         }
-        
+
         sToastInstance.show();
     }
 
@@ -56,7 +56,7 @@ public class ToastUtil {
         } else {
             sToastInstance = createToast(context, text, Toast.LENGTH_SHORT);
         }
-        
+
         sToastInstance.show();
     }
 

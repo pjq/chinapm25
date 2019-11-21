@@ -1,12 +1,14 @@
 package me.pjq.chinapm25;
 
 
+import java.io.Serializable;
+
 /**
  * var myCompOverlay = new ComplexCustomOverlay(cityPoints["秦皇岛"], "秦皇岛", "秦皇岛", "秦皇岛 105 - 较不健康", "#eb8a14", "");
  * <p>
  * Created by pjq on 1/21/15.
  */
-public class PM25Object {
+public class PM25Object implements Serializable {
     String cityPingyin;
     String cityChinese;
     String pm25;
@@ -23,10 +25,6 @@ public class PM25Object {
 
     public String getColor() {
         return color;
-    }
-
-    public int getColorInt() {
-        return  Utils.HexToInt(color.replace("#", "0x"));
     }
 
     public void setColor(String color) {

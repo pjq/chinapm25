@@ -3,10 +3,13 @@ package me.pjq.chinapm25;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.fragment.app.Fragment;
 
 public abstract class BaseFragment extends Fragment {
     private String TAG;
@@ -25,6 +28,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         EFLogger.i(TAG, "onCreateView");
         this.container = container;
 

@@ -1,6 +1,5 @@
 package me.pjq.chinapm25;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +9,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,11 +29,13 @@ import java.util.regex.Pattern;
 import me.pjq.chinapm25.helper.UserPreference;
 
 
-public class CityListFragment extends BaseFragment {
+public class CityListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private View view;
     private ListView listView;
     ExchangeHistoryListAdapter adapter;
     ArrayList<String> preDefineCityList;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private ProgressBar mProgressBar;
 
     @Override
     public void onAttach(Context activity) {
@@ -49,15 +52,12 @@ public class CityListFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
-    @Override
+    // onCreateView
     protected View onGetFragmentView(LayoutInflater inflater) {
         view = inflater.inflate(R.layout.citylist_layout, null);
-
         return view;
     }
 
-    // onCreateView
     @Override
     protected void ensureUi() {
         init();
@@ -75,7 +75,7 @@ public class CityListFragment extends BaseFragment {
             public boolean onQueryTextSubmit(String s) {
                 UserPreference.setStoredQuery(getContext(), s);
                 searchView.clearFocus();
-                onStartGetData();
+                getRemoteData(true);
                 return true;
             }
 
@@ -84,7 +84,7 @@ public class CityListFragment extends BaseFragment {
                 if ((s == null || s.isEmpty()) && UserPreference.getStoredQuery(getContext()) != null && !UserPreference.getStoredQuery(getContext()).isEmpty()) {
                     UserPreference.setStoredQuery(getContext(), null);
                     searchView.clearFocus();
-                    onStartGetData();
+                    getRemoteData(true);
                 }
                 return true;
             }
@@ -107,6 +107,8 @@ public class CityListFragment extends BaseFragment {
                 Intent intent = MapActivity.newItent(getActivity(), defaultObj);
                 startActivity(intent);
                 return true;
+            case R.id.refresh_list:
+                getRemoteData(false);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -115,54 +117,32 @@ public class CityListFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        if (null != progressDialog && progressDialog.isShowing()) {
-
-        } else {
-            onStartGetData();
-        }
+        getRemoteData(true);
     }
 
     private void init() {
         preDefineCityList = getPreDefineCity();
-
         listView = view.findViewById(R.id.list_view);
         adapter = new ExchangeHistoryListAdapter(getActivity());
         listView.setAdapter(adapter);
+        mSwipeRefreshLayout = view.findViewById(R.id.swiperefresh);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mProgressBar = view.findViewById(R.id.progress_bar);
     }
 
-    ProgressDialog progressDialog;
-
-    private void showProgressDialog(String string) {
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle(string);
-        progressDialog.setMessage(getString(R.string.please_wait));
-        progressDialog.show();
-    }
-
-    private void hideProgressDialog() {
-        if (null != progressDialog) {
-            progressDialog.dismiss();
-            progressDialog = null;
-        }
-    }
-
-    private void onStartGetData() {
-        showProgressDialog(getString(R.string.get_data));
+    private void getRemoteData(boolean useCache) {
         final PM25Appliction pm25Appliction = (PM25Appliction)getActivity().getApplication();
-        if (pm25Appliction.getPM25Objects() != null) {
-            hideProgressDialog();
+        if (useCache && pm25Appliction.getPM25Objects() != null) {
             updateList(pm25Appliction.getPM25Objects());
             return;
         }
-
+        mProgressBar.setVisibility(View.VISIBLE);
         VolleyManger.getInstance().getPM25From(new VolleyManger.OnResponse<String>() {
             @Override
             public void onResponse(Object error, String s) {
                 if (getActivity().isFinishing() || isDetached()) {
                     return;
                 }
-                hideProgressDialog();
 
                 try {
                     if (null == error) {
@@ -173,6 +153,7 @@ public class CityListFragment extends BaseFragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                mProgressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -270,64 +251,6 @@ public class CityListFragment extends BaseFragment {
         return list;
     }
 
-    private void onFinishGetData(boolean isSuccess, String s) {
-        if (!isFragmentStillAlive()) {
-            return;
-        }
-
-        progressDialog.dismiss();
-        progressDialog = null;
-
-        if (isSuccess) {
-            int max = 30;
-            ArrayList<PM25Object> list = new ArrayList<PM25Object>();
-            String[] all = s.split("\n");
-
-            if (null == all || all.length == 0) {
-                ToastUtil.showToast("List is empty");
-                return;
-            }
-
-            for (String item : all) {
-                String pingyin = "";
-                String chinese = "";
-                String pm25 = "";
-
-                String[] pms = item.split(" ");
-                if (pms != null && pms.length >= 2) {
-                    String[] names = pms[0].split("_");
-                    if (names != null && names.length >= 2) {
-                        pingyin = names[0];
-                        chinese = names[1];
-                    }
-
-                    pm25 = pms[1];
-                }
-
-                PM25Object object = new PM25Object(pingyin, chinese, pm25);
-                list.add(object);
-            }
-
-            Collections.sort(list, new Comparator<PM25Object>() {
-                @Override
-                public int compare(PM25Object lhs, PM25Object rhs) {
-                    return -(rhs.getPm25Int() - lhs.getPm25Int());
-                }
-            });
-
-            int total = list.size();
-            for (int i = 0; i < total; i++) {
-                list.get(i).setIndeOfAll(i);
-            }
-
-            list = appendPredefineList(list);
-            adapter.updateDataList(list, list.size() - preDefineCityList.size());
-
-        } else {
-            ToastUtil.showToast(getString(R.string.fail));
-        }
-    }
-
     private ArrayList<String> getPreDefineCity() {
         ArrayList<String> preDefine = new ArrayList<String>();
         preDefine.add("shanghai");
@@ -409,5 +332,11 @@ public class CityListFragment extends BaseFragment {
         }
 
         return utf8;
+    }
+
+    @Override
+    public void onRefresh() {
+        mSwipeRefreshLayout.setRefreshing(false);
+        getRemoteData(false);
     }
 }

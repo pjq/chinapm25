@@ -1,5 +1,5 @@
 No JSON object could be decoded
-*.apk
+#*.apk
 *.ap_
 
 # Files for the ART/Dalvik VM
